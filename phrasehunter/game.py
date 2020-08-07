@@ -35,11 +35,38 @@ class Game:
             self.active_phrase.check_guess(user_guess)
             if not self.active_phrase.check_guess(user_guess):
                 self.lives -= 1
-        self.game_over()
+
+            if self.lives > 0 and self.active_phrase.check_complete(self.guesses) == True:
+                print("Congratulations! You won!!\n")
+                play_again = input("Would you like to play again? (Y)es or (N)o: ").lower()
+                if play_again == 'y':
+                    self.guesses.clear()
+                    self.active_phrase = random.choice(self.phrases)
+                    self.lives = 5
+                    print("\nWelcome back to the greatet PHRASE HUNTER game of all time!\n")
+                    continue
+                else:
+                    print("\nThanks for playin', Breaux-ham\n")
+                break
+
+            elif self.lives == 0 and self.active_phrase.check_complete(self.guesses) == False:
+                print('Game over, BREAUX! You LOST!!!\n')
+                play_again = input("Would you like to play again? (Y)es or (N)o: ").lower()
+                if play_again == 'y':
+                    self.guesses.clear()                    
+                    self.active_phrase = random.choice(self.phrases)
+                    self.lives = 5
+                    print("\nWelcome back to the greatest PHRASE HUNTER game of all time!\n")
+                    continue
+                else:
+                    print("\nThanks for playin', Breaux-ham\n")
+                break
+
+        
             
 
     def get_guess(self):
-        user_guess = input("Guess a letter in the phrase!: ")
+        user_guess = input("Guess a letter in the phrase!: ").lower()
         return user_guess
 
 
