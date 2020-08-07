@@ -5,6 +5,7 @@ from phrasehunter.game import Game
 # Create your Dunder Main statement.
 if __name__ == '__main__':
     game = Game()
+    game.welcome()
     game.start()
 
 
