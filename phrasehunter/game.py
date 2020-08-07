@@ -2,7 +2,7 @@ import random
 from phrasehunter.phrase import Phrase
 
 
-# Create your Game class logic in here.
+
 class Game:
     def __init__ (self):
         self.lives = 5
@@ -34,12 +34,8 @@ class Game:
             self.active_phrase.check_guess(user_guess)
             if not self.active_phrase.check_guess(user_guess):
                 self.lives -= 1
-            if self.lives > 0 and self.active_phrase.check_complete(self.guesses) == True:
-                print("Congratulations! You won!!\n")
-                self.play_more()
-            elif self.lives == 0 and self.active_phrase.check_complete(self.guesses) == False:
-                print('Game over, BREAUX! You LOST!!!\n')
-                self.play_more()
+            self.lives_remaining()
+            
 
 
     def get_guess(self):
@@ -50,24 +46,21 @@ class Game:
                     raise ValueError
                 return user_guess
             except ValueError:
-                print('\nNot a valid entry, try again Breaux-ham-megeline\n')
+                print('\nNot a valid entry, try again Breauxham-megelin\n')
                 self.lives -= 1
                 print(f"Lives remaining: {self.lives}")
                 self.active_phrase.display(self.guesses)
-                if self.lives == 0 and self.active_phrase.check_complete(self.guesses) == False:
-                    print('Game over, BREAUX! You LOST!!!\n')
-                    break
-        self.play_more()
+                self.lives_remaining()
                     
     def play_more(self):
         while True:
             try:
                 play_again = input("Would you like to play again? (Y)es or (N)o: ").lower()
-                if play_again == 'y':
+                while play_again == 'y':
                     self.reset()
-                elif play_again == 'n':
-                    print("\nThanks for playin', Breaux-HAM\n")
-                    break
+                if play_again == 'n':
+                    print("\nThanks for playin', BreauxHAM\n")
+                    exit()
                 else:
                     raise ValueError
             except ValueError:
@@ -86,7 +79,11 @@ class Game:
         \n""")
         self.start()
     
-
-
-
+    def lives_remaining(self):
+        if self.lives > 0 and self.active_phrase.check_complete(self.guesses) == True:
+            print("\nCongratulations! You won!!\n")
+            self.play_more()
+        elif self.lives == 0 and self.active_phrase.check_complete(self.guesses) == False:
+            print('\nGame over, BREAUX! You LOST!!!\n')
+            self.play_more()
 
