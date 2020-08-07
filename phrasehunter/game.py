@@ -5,7 +5,7 @@ from phrasehunter.phrase import Phrase
 # Create your Game class logic in here.
 class Game:
     def __init__ (self):
-        self.missed = 0
+        self.lives = 5
         self.phrases = [
             Phrase("Obesity is the leading cause of covid deaths in america"),
             Phrase("Learning to code is challenging"),
@@ -16,6 +16,7 @@ class Game:
         self.active_phrase = random.choice(self.phrases)
         self.guesses = [" "]
 
+
     def welcome(self):
         print("""
         ***********************************************
@@ -23,26 +24,27 @@ class Game:
         ***********************************************
         """)
 
+
     def start(self):
         self.welcome()
-        while self.missed < 5 and self.active_phrase.check_complete(self.guesses) == False:
-            print(f"Number missed: {self.missed}")
+        while self.lives > 0 and self.active_phrase.check_complete(self.guesses) == False:
+            print(f"Lives remaining: {self.lives}")
             self.active_phrase.display(self.guesses)
             user_guess = self.get_guess()
             self.guesses.append(user_guess)
             self.active_phrase.check_guess(user_guess)
             if not self.active_phrase.check_guess(user_guess):
-                self.missed += 1
+                self.lives -= 1
         self.game_over()
             
-        
-    
+
     def get_guess(self):
-        user_guess = input("Guess a letter in the phrase!")
+        user_guess = input("Guess a letter in the phrase!: ")
         return user_guess
 
+
     def game_over(self):
-        if self.missed == 5:
+        if self.lives == 0:
             print("OOPS! Looks like you lost, BREAUX!")
         else:
             print("Congratulations! You won!!")
