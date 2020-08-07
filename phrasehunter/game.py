@@ -46,7 +46,7 @@ class Game:
                     raise ValueError
                 return user_guess
             except ValueError:
-                print('\nNot a valid entry, try again Breauxham-megelin\n')
+                print('\nNot a valid entry, try again, Breauxham-megelin\n')
                 self.lives -= 1
                 print(f"Lives remaining: {self.lives}")
                 self.active_phrase.display(self.guesses)
