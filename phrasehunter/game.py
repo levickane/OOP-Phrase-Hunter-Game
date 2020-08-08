@@ -25,7 +25,11 @@ class Game:
         """)
 
 
-    def start(self):    
+    def start(self):
+        """This code loops until the user the user quits (through a series of other functions). At 
+        the end of this code is self.lives_remaining function which loops a few other options that
+        either offers the game to play_more() and reset() the game OR works through throwing
+        ValueErrors which eventually ask if you want to play_more() and then reset() the Game."""    
         while self.lives > 0 and self.active_phrase.check_complete(self.guesses) == False:
             print(f"Lives remaining: {self.lives}")
             self.active_phrase.display(self.guesses)
@@ -36,6 +40,29 @@ class Game:
                 self.lives -= 1
             self.lives_remaining()
             
+
+    def lives_remaining(self):
+        if self.lives > 0 and self.active_phrase.check_complete(self.guesses) == True:
+            print("\nCongratulations! You won!!\n")
+            self.play_more()
+        elif self.lives == 0 and self.active_phrase.check_complete(self.guesses) == False:
+            print('\nGame over, BREAUX! You LOST!!!\n')
+            self.play_more()
+
+
+    def play_more(self):
+        while True:
+            try:
+                play_again = input("Would you like to play again? (Y)es or (N)o: ").lower()
+                while play_again == 'y':
+                    self.reset()
+                if play_again == 'n':
+                    print("\nThanks for playin', BreauxHAM\n")
+                    exit()
+                else:
+                    raise ValueError
+            except ValueError:
+                print("Not a valid entry, TRY AGAIN")
 
 
     def get_guess(self):
@@ -52,20 +79,6 @@ class Game:
                 self.active_phrase.display(self.guesses)
                 self.lives_remaining()
                     
-    def play_more(self):
-        while True:
-            try:
-                play_again = input("Would you like to play again? (Y)es or (N)o: ").lower()
-                while play_again == 'y':
-                    self.reset()
-                if play_again == 'n':
-                    print("\nThanks for playin', BreauxHAM\n")
-                    exit()
-                else:
-                    raise ValueError
-            except ValueError:
-                print("Not a valid entry, TRY AGAIN")
-
                 
     def reset(self):
         self.guesses.clear()                    
@@ -79,11 +92,5 @@ class Game:
         \n""")
         self.start()
     
-    def lives_remaining(self):
-        if self.lives > 0 and self.active_phrase.check_complete(self.guesses) == True:
-            print("\nCongratulations! You won!!\n")
-            self.play_more()
-        elif self.lives == 0 and self.active_phrase.check_complete(self.guesses) == False:
-            print('\nGame over, BREAUX! You LOST!!!\n')
-            self.play_more()
+
 
